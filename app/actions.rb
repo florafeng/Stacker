@@ -4,7 +4,13 @@ get '/' do
 end
 
 post '/' do
-	@search = Search.new(
-		)
+    @query = params[:search]
+	puts "s"
+	redirect '/ans' if @query != nil
+end
+
+get '/ans' do
+	
+	erb :ans 
 end
 
