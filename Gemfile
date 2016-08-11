@@ -10,6 +10,8 @@ gem 'sinatra-activerecord'
 
 gem 'puma'
 gem 'tux'
+gem 'httparty'
+gem 'ruby-stackoverflow'
 
 
 # These gems are only installed when run as `bundle install --without production`

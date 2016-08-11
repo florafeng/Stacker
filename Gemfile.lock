@@ -1,13 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (5.0.0)
-      activesupport (= 5.0.0)
-    activerecord (5.0.0)
-      activemodel (= 5.0.0)
-      activesupport (= 5.0.0)
+    activemodel (5.0.0.1)
+      activesupport (= 5.0.0.1)
+    activerecord (5.0.0.1)
+      activemodel (= 5.0.0.1)
+      activesupport (= 5.0.0.1)
       arel (~> 7.0)
-    activesupport (5.0.0)
+    activesupport (5.0.0.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -17,10 +17,15 @@ GEM
     bond (0.5.1)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
+    json (2.0.2)
     method_source (0.8.2)
     minitest (5.9.0)
     multi_json (1.12.1)
+    multi_xml (0.5.5)
     pg (0.18.4)
     pry (0.10.4)
       coderay (~> 1.1.0)
@@ -41,6 +46,9 @@ GEM
       rack (>= 1.0)
       rack-test (~> 0.6.2)
       ripl (>= 0.7.0)
+    ruby-stackoverflow (0.0.3)
+      httparty (~> 0.11.0)
+      json
     shotgun (0.9.1)
       rack (>= 1.0)
     sinatra (1.4.7)
@@ -74,10 +82,12 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  httparty
   pg
   pry
   puma
   rake
+  ruby-stackoverflow
   shotgun
   sinatra
   sinatra-activerecord
