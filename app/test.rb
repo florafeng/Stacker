@@ -1,26 +1,17 @@
-# require 'pry'
-response = HTTParty.get('http://api.stackexchange.com/2.2/questions?site=stackoverflow')
-# binding.pry
-# puts response.body, response.code, response.message, response.headers.inspect
+require 'open-uri'
+require 'nokogiri'
+require 'pry'
 
-# # # Or wrap things up in your own class
-# # class StackExchange
-# #   include HTTParty
-# #   base_uri 'api.stackexchange.com'
+nokogiri_object = Nokogiri::HTML(open('http://stackoverflow.com/questions/19715819/divide-number-with-decimals-javascript'))
 
-# #   def initialize(service, page)
-# #     @options = { query: {site: service, page: page} }
-# #   end
+q_body = nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_s
+puts q_body.class
 
-# #   def questions
-# #     self.class.get("/2.2/questions", @options)
-# #   end
 
-# #   def users
-# #     self.class.get("/2.2/users", @options)
-# #   end
-# # end
-
-# # stack_exchange = StackExchange.new("stackoverflow", 1)
-# # puts stack_exchange.questions
-# # puts stack_exchange.users
+# a_body = nokogiri_object.xpath("//div[@class='answer accepted-answer']//div[@class='post-text']")
+# # a = a_body.to_s
+# # puts a.
+# b_body = a_body.to_s
+class
+# # binding.pry
+# puts b_body
