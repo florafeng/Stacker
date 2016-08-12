@@ -14,9 +14,12 @@ GEM
       tzinfo (~> 1.1)
     arel (7.1.1)
     backports (3.6.8)
+    bcrypt (3.1.11)
     bond (0.5.1)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
+    faker (1.6.6)
+      i18n (~> 0.5)
     httparty (0.11.0)
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
@@ -82,6 +85,8 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
+  bcrypt
+  faker
   httparty
   pg
   pry
@@ -96,4 +101,4 @@ DEPENDENCIES
   tux
 
 BUNDLED WITH
-   1.12.1
+   1.12.5

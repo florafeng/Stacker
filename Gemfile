@@ -12,6 +12,8 @@ gem 'puma'
 gem 'tux'
 gem 'httparty'
 gem 'ruby-stackoverflow'
+gem 'bcrypt'
+gem 'faker'
 
 
 # These gems are only installed when run as `bundle install --without production`
