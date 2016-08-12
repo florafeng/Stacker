@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812141422) do
+ActiveRecord::Schema.define(version: 20160812220101) do
 
   create_table "saved_posts", force: :cascade do |t|
     t.integer  "question_id"
@@ -19,6 +19,20 @@ ActiveRecord::Schema.define(version: 20160812141422) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "query_text"
+  end
+
+  create_table "so_responses", force: :cascade do |t|
+    t.string   "so_question_title"
+    t.string   "so_question_body"
+    t.string   "so_answer_body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_querys", force: :cascade do |t|
+    t.text     "user_query_text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|
