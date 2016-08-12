@@ -6,3 +6,7 @@
 /db/*.sqlite3-journal
 .DS_Store
 public/assets
+output.find_answer
+output.find_question
+test.rb
+testsql.rb

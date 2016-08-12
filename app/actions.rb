@@ -1,37 +1,51 @@
-def check_login
-  @user = User.find_by(id: session[:user_id])
-  unless @user
-    session[:login_error] = "You must be logged in"
-    redirect '/login'
-  end
-end
 
 # Login
+
 get '/login' do
   erb :login
 end
 
-# Login validation
-# Note this action doesn't render anything - just redirects to
+# Login validation.  This action doesn't render anything - just redirects to
 # two other actions depending on a successful login.
+
 post '/validate' do
   email = params[:email]
   password = params[:password]
-  # We're using has_secure_password on User, so we'll check the password using
-  # User#authenticate. Now, because we can get a wrong email too, we can have
-  # a situation where User.find_by(email ...) will return nil, blowing up
-  # on authenticate. To avoid that we'll use the .try() method, which
-  # automatically stops if we get a nil from User#find_by.
   user = User.find_by(email: email).try(:authenticate, password)
-  binding.pry
   if user
-    session.delete(:login_error) # Login successful, delete login error message
+
+# Successful login - proceed normally.
+
+    session.delete(:login_error)
     session[:user_id] = user.id
-    redirect '/ans'
+    redirect '/user_query'
   else
-    session.delete(:user_id) # Just to make sure we're logged out
-    session[:login_error] = "You must be logged in."
-    redirect '/login'
+    user = User.find_by(email: email)
+    if user
+
+# Valid user - password error
+
+      session[:login_error] = "Password error."
+      redirect '/login'
+    else
+
+# Create a new user - sign'em up
+
+      user = User.new()
+      user.email = params[:email]
+      user.password = params[:password]
+      if user.save
+        session.delete(:login_error)
+        session[:user_id] = user.id
+        redirect "/user_query"
+      else
+
+# This should never happen
+
+        session[:login_error] = "Error should never happen."
+        redirect "/login"
+      end
+    end
   end
 end
 
@@ -46,30 +60,34 @@ get '/' do
   erb :index
 end
 
-post '/' do
-    @query = params[:search]
+get '/user_query' do
+  erb :user_query
+end
+
+#post '/' do
+#    @query = params[:search]
     # @response_hash = question_title_by_votes
     # @q_title = get_q_title
-end
+#end
 
-get '/ans' do
-	@response_hash = question_title_by_votes
-    @q_title = get_q_title
-	erb :ans 
-end
+#get '/ans' do
+#	@response_hash = question_title_by_votes
+#    @q_title = get_q_title
+#	erb :ans 
+#end
 
-def question_title_by_votes
+#def question_title_by_votes
 	#/2.2/search/advanced?order=desc&sort=votes&title=selknvslk&site=stackoverflow
-	url_p1 = 'http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=votes&'
-	url_p3 = '&site=stackoverflow'
-	url = url_p1 + @query + url_p3
-    HTTParty.get(url)
-end
+#	url_p1 = 'http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=votes&'
+#	url_p3 = '&site=stackoverflow'
+#	url = url_p1 + @query + url_p3
+#    HTTParty.get(url)
+#end
 
-def get_q_title
-	@q_title = []
-    @response_hash["items"].each do |item|
-    	@q_title << item["title"]
-    end
-    @q_title
-end
+#def get_q_title
+#	@q_title = []
+#    @response_hash["items"].each do |item|
+#    	@q_title << item["title"]
+#    end
+#    @q_title
+#end
