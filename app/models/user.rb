@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-	has_many :saved_posts
+	has_many :user_querys
   has_secure_password
   
 end
