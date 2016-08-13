@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812220101) do
+ActiveRecord::Schema.define(version: 20160813005118) do
 
   create_table "saved_posts", force: :cascade do |t|
     t.integer  "question_id"

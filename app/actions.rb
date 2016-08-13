@@ -18,6 +18,7 @@ post '/validate' do
 
     session.delete(:login_error)
     session[:user_id] = user.id
+    session[:current_user] = user.id
     redirect '/user_query'
   else
     user = User.find_by(email: email)
@@ -70,31 +71,16 @@ end
     # @q_title = get_q_title
 #end
 
-#get '/ans' do
-#	@response_hash = question_title_by_votes
-#    @q_title = get_q_title
-#	erb :ans 
-#end
 
-#def question_title_by_votes
-	#/2.2/search/advanced?order=desc&sort=votes&title=selknvslk&site=stackoverflow
-#	url_p1 = 'http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=votes&'
-#	url_p3 = '&site=stackoverflow'
-#	url = url_p1 + @query + url_p3
-#    HTTParty.get(url)
-#end
-
-#def get_q_title
-#	@q_title = []
-#    @response_hash["items"].each do |item|
-#    	@q_title << item["title"]
-#    end
-#    @q_title
-#end
 post '/' do
     @query = params[:search]
     response_hash
     get_data
+    redirect '/search_result'
+end
+
+get "/search_result" do
+  erb :search_result
 end
 
 # get '/ans' do
@@ -104,21 +90,30 @@ end
 # end
 
 def response_hash
-	#/2.2/search/advanced?order=desc&sort=votes&title=selknvslk&site=stackoverflow
-	url_p1 = 'http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=votes&'
-	url_p3 = '&site=stackoverflow'
-	url = url_p1 + @query + url_p3
+  #/2.2/search/advanced?order=desc&sort=votes&title=selknvslk&site=stackoverflow
+  url_p1 = 'http://api.stackexchange.com/2.2/search/advanced?order=desc&sort=votes&'
+  url_p3 = '&site=stackoverflow'
+  url = url_p1 + @query + url_p3
   @response_hash = HTTParty.get(url)
 end
 
 def get_data
+    session[:user_id] = nil
     @response_hash["items"].each do |item|
-      @q_title = item["title"]
+      q_title = item["title"]
       @q_link = item["link"]
       @nokogiri_object = Nokogiri::HTML(open(@q_link))
-      @q_body = @nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_s
-      @a_body = @nokogiri_object.xpath("//div[@class='answer accepted-answer']//div[@class='post-text']").to_s
+      q_body = @nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_s
+      a_body = @nokogiri_object.xpath("//div[@class='answer accepted-answer']//div[@class='post-text']").to_s
+      @so_response = SoResponse.new(
+        so_question_title: q_title,
+        so_question_body: q_body,
+        so_answer_body: a_body,
+        # user_id: session[:user_id]
+        )
+      if @so_response.save 
+      else puts "noooo"
+      end
     end
 end
-
 
