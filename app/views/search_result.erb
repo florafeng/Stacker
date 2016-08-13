@@ -1,0 +1,14 @@
+<!-- <p><%=@response_array.size %></p> -->
+
+<div>
+  <ul>
+    <% @response_array.each do |a| %>
+    <li><%=a[:so_question_body] %> </li>
+    <% end %>
+    
+  </ul>
+</div>
+
+<!-- so_question_title
+      so_question_body
+      so_answer_body-->
