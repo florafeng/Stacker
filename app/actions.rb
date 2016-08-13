@@ -8,6 +8,11 @@ end
 # Login validation.  This action doesn't render anything - just redirects to
 # two other actions depending on a successful login.
 
+get '/test' do
+  @test_variable = "I'M ACTUALLY HERE"
+  erb :test
+end
+
 post '/validate' do
   email = params[:email]
   password = params[:password]
@@ -76,12 +81,15 @@ post '/' do
     @query = params[:search]
     response_hash
     get_data
-    redirect '/search_result'
+    erb :search_result
+
+    # redirect '/search_result'
 end
 
-get "/search_result" do
-  erb :search_result
-end
+# get "/search_result" do
+#   # binding.pry
+#   erb :search_result
+# end
 
 # get '/ans' do
 # 	@response_hash = question_title_by_votes
@@ -98,22 +106,22 @@ def response_hash
 end
 
 def get_data
-    session[:user_id] = nil
-    @response_hash["items"].each do |item|
-      q_title = item["title"]
-      @q_link = item["link"]
-      @nokogiri_object = Nokogiri::HTML(open(@q_link))
-      q_body = @nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_s
-      a_body = @nokogiri_object.xpath("//div[@class='answer accepted-answer']//div[@class='post-text']").to_s
-      @so_response = SoResponse.new(
-        so_question_title: q_title,
-        so_question_body: q_body,
-        so_answer_body: a_body,
-        # user_id: session[:user_id]
-        )
-      if @so_response.save 
-      else puts "noooo"
-      end
-    end
+  @response_array = []
+  @response_hash["items"].each do |item|
+    q_title = item["title"]
+    q_link = item["link"]
+    @nokogiri_object = Nokogiri::HTML(open(q_link))
+    q_body = @nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_html
+    # binding.pry
+    a_body = @nokogiri_object.xpath("//div[@class='answer accepted-answer']//div[@class='post-text']").to_html
+    so_response = Hash.new
+    so_response = {
+      so_question_title: q_title,
+      so_question_body: q_body,
+      so_answer_body: a_body
+      }
+    @response_array << so_response
+  end
+  @response_array
 end
 
