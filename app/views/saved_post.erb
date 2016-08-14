@@ -1,10 +1,22 @@
-<div>
-	<ul>
-		<% @saved_post.each do |item| %>
-			<% nokogiri_object = Nokogiri::HTML(open(item.q_link)) %>
-			<% q_body = nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_html %>
-
-			<li><%= q_body %></li>
-        <% end %>
-    </ul>
-</div>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+    <link type = "text/css" rel = "stylesheet" href = "./public/stylesheets/style.css">
+  </head>
+  <body background="https://pixabay.com/static/uploads/photo/2015/10/09/13/10/question-mark-979204__340.png">
+    <div>
+		  <% @saved_post.each do |item| %>
+        <ul class="collection">
+	  		   <% nokogiri_object = Nokogiri::HTML(open(item.q_link)) %>
+		  	   <% q_body = nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_html %>
+			     <li class="collection-item"><%= q_body %></li>
+        </ul>
+      <% end %>
+    </div>
+  </body>
+</html>
