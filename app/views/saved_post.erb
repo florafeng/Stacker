@@ -1,0 +1,10 @@
+<div>
+	<ul>
+		<% @saved_post.each do |item| %>
+			<% nokogiri_object = Nokogiri::HTML(open(item.q_link)) %>
+			<% q_body = nokogiri_object.xpath("//div[@class='question']//div[@class='post-text']").to_html %>
+
+			<li><%= q_body %></li>
+        <% end %>
+    </ul>
+</div>
