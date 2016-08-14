@@ -1,24 +1,30 @@
-
-<div>
-  <ul>
-    <% @response_array.each do |a| %>
-    <li><%=a[:so_question_title] %> </li>
-    <form method='post' action='/saved_post'>
-      <input type="hidden" name="q_link" value="<%=a[:so_link] %>">
-      <input type="hidden" name="query_text" value="<%=a[:so_question_title] %>">
-      <input type="hidden" name="q_title" value="<%=a[:so_question_title] %>">
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+    <link type = "text/css" rel = "stylesheet" href = "./public/stylesheets/style.css">
+  </head>
+  <body background="https://pixabay.com/static/uploads/photo/2015/10/09/13/10/question-mark-979204__340.png">
+    <div class="container">
+      <ul class="collapsible" data-collapsible="accordion">
+          <% @response_array.each do |a| %>
+          <li>
+            <form method='post' action='/saved_post'>
+              <input type="hidden" name="q_link" value="<%=a[:so_link] %>">
+              <input type="hidden" name="query_text" value="<%=a[:so_query] %>">
+              <input type="hidden" name="q_title" value="<%=a[:so_question_title] %>">
     <!--   <input type="hidden" name="response_array" value=<%=@response_array %>> -->
-      <input type="submit" value="save">
-    </form>
-    <% end %>
-  <!--   <form>
-    <input type="hidden" name="response_array" value=<%=@response_array %>>
-    <input type="submit">
-    </form> -->
-  </ul>
-</div>
-
-<!-- so_question_title
-      so_question_body
-      so_answer_body
-      so_query:-->
+              <div class="collapsible-header"><%=a[:so_question_title] %></div>
+              <div class="collapsible-body"><p><%=a[:so_answer_body] %></p></div>
+              <input type="submit" value="save">
+              </form>
+            </li>
+          <% end %>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -65,13 +65,13 @@ end
 post '/' do
   @query = params[:search]
   @response_array = get_data(response_hash(@query))
-  SavedPost.delete_all
   erb :search_result
 end
 
 post '/saved_post' do
   # binding.pry
   saved_post
+#  binding.pry
   if session[:current_user].nil?
   else
   @saved_post = SavedPost.where(user_id: session[:current_user])
@@ -113,15 +113,16 @@ def get_data(r_hash)
     r_array << so_response
   end
   r_array
+  # binding.pry
 end
 
 
 def saved_post
   if session[:current_user].nil?
   else
-    saved_post = SavedPost.find_by(user_id: session[:current_user], q_link: params[:q_link])
+    saved_post = SavedPost.find_by(user_id: session[:current_user], q_link: params[:q_link], q_title: params[:q_title])
     if saved_post.nil?
-      SavedPost.create(user_id: session[:current_user], q_link: params[:q_link], query_text: params[:query_text], q_title: params[:q_title])
+      a=SavedPost.create(user_id: session[:current_user], q_link: params[:q_link], query_text: params[:query_text], q_title: params[:q_title])
     end
   end
 end
