@@ -1,11 +1,22 @@
-<h1>Login</h1>
-
-<% if session[:login_error] %>
-  <p><%= session[:login_error] %></p>
-<% end %>
-
-<form method="POST" action="/validate">
-  <p>Email: <input type="text" name="email"></p>
-  <p>Password: <input type="password" name="password"></p>
-  <p><input type="submit" value="Go!"></p>
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="script.js"></script>
+    <link type = "text/css" rel = "stylesheet" href = "./public/stylesheets/style.css">
+  </head>
+  <body background="https://pixabay.com/static/uploads/photo/2015/10/09/13/10/question-mark-979204__340.png">
+    <h1>Login</h1>
+    <% if session[:login_error] %>
+      <p><%= session[:login_error] %></p>
+    <% end %>
+    <form method="POST" action="/validate">
+      <p>Email: <input type="text" name="email"></p>
+      <p>Password: <input type="password" name="password"></p>
+      <p><input type="submit" value="Go!"></p>
+    </form>
+  </body>
+</html>
