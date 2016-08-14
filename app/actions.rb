@@ -76,13 +76,14 @@ post '/saved_post' do
   else
   @saved_post = SavedPost.where(user_id: session[:current_user])
   end
+
   erb :saved_post
 end
 
-get '/saved_post' do
-  @saved_post = SavedPost.where(user_id: session[:current_user])
-  erb :saved_post
-end
+# get '/saved_post' do
+#   @saved_post = SavedPost.where(user_id: session[:current_user])
+#   erb :saved_post
+# end
 
 
 def response_hash(q)
@@ -109,6 +110,7 @@ def get_data(r_hash)
       so_link: q_link,
       so_query: @query
       }
+      # binding.pry
     r_array << so_response
   end
   r_array
@@ -116,7 +118,7 @@ end
 
 
 def saved_post
-  binding.pry
+  # binding.pry
   if session[:current_user].nil?
   else
     saved_post = SavedPost.find_by(user_id: session[:current_user], q_link: params[:q_link])
