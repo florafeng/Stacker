@@ -1,14 +1,24 @@
-<!-- <p><%=@response_array.size %></p> -->
 
 <div>
   <ul>
     <% @response_array.each do |a| %>
-    <li><%=a[:so_question_body] %> </li>
+    <li><%=a[:so_question_title] %> </li>
+    <form method='post' action='/saved_post'>
+      <input type="hidden" name="q_link" value=<%=a[:so_link] %>>
+      <input type="hidden" name="query_text" value=<%=a[:so_question_title] %>>
+      <input type="hidden" name="q_title" value=<%=a[:so_question_title] %>>
+    <!--   <input type="hidden" name="response_array" value=<%=@response_array %>> -->
+      <input type="submit" value="save">
+    </form>
     <% end %>
-    
+  <!--   <form>
+    <input type="hidden" name="response_array" value=<%=@response_array %>>
+    <input type="submit">
+    </form> -->
   </ul>
 </div>
 
 <!-- so_question_title
       so_question_body
-      so_answer_body-->
+      so_answer_body
+      so_query:-->

@@ -1,0 +1,10 @@
+<p>s</p>
+<div>
+	<ul>
+		<% @saved_post.each do |post| %>
+			<% nokogiri_object = Nokogiri::HTML(open(post.q_link)) %>
+
+			<li><%= post.q_title %></li>
+        <% end %>
+    </ul>
+</div>
